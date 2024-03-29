@@ -12,7 +12,7 @@ object ZigZag {
     NorthEast, NorthWest, SouthEast, SouthWest = Value
   }
 
-  val row = List.fill(10)('x')
+  val row = List.fill(10)('%')
   val board = List.fill(10)(row)
 
   //T1
@@ -47,7 +47,8 @@ object ZigZag {
   }
 
   //T4
-  def completeBoardRandomly(board: Board, r: MyRandom, f: MyRandom => (Char, MyRandom)): (Board, MyRandom) = { (board,r) }
+  def completeBoardRandomly(board: Board, r: MyRandom, f: MyRandom => (Char, MyRandom)): (Board, MyRandom) = {(board,r)}
+
 
   def main(args: Array[String]): Unit = {
 
@@ -64,7 +65,12 @@ object ZigZag {
 
     //Teste T3
     val board2 = setBoardWithWords(board, List("DIOGO","AO"), List(List((1,0),(1,1),(1,2),(1,3),(1,4)),List((4,4),(3,5))))
-    IO_Utils.printBoard(board2)
+    //IO_Utils.printBoard(board2)
+
+    //Testes para fazer T4
+    val r = MyRandom(9)
+    val board3 = board2.map(x => x.map(y => if(y=='%') randomChar(r)._1 else y))
+    IO_Utils.printBoard(board3)
 
   }
 
