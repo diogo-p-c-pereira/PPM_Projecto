@@ -1,5 +1,7 @@
 package ZigZagGame
 
+import ZigZagGame.ZigZag.Board
+
 import java.io._
 import scala.collection.SortedMap
 import scala.io.StdIn.readLine
@@ -26,6 +28,16 @@ object IO_Utils {
       case Success(i) => options.get(i)
       case Failure(_) => println("Invalid number!"); optionPrompt(options)
     }
+  }
+
+  def printBoard[A](board: List[List[A]]): Unit = board match {
+    case Nil => Nil
+    case x::xs => printRow(x); printBoard(xs)
+  }
+
+  def printRow[A](list: List[A]): Unit = list match {
+    case Nil => println()
+    case x::xs => print(x + " "); printRow(xs)
   }
 
   def copyBytes(filenameIn: String, filenameOut: String) {
