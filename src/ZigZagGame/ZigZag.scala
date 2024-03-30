@@ -60,6 +60,7 @@ object ZigZag {
                     else { val c = _completeBoardRandomly(xs,r,f); (x::c._1, c._2) }
   }
 
+  //Testes
   def main(args: Array[String]): Unit = {
 
     //Teste T1
