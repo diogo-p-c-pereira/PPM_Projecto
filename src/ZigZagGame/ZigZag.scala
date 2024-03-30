@@ -1,6 +1,9 @@
 package ZigZagGame
 
-case class ZigZag(rand: MyRandom){ }
+import ZigZagGame.ZigZag.Board
+import ZigZagGame.ZigZag.Direction.Direction
+
+case class ZigZag(board: Board, rand: MyRandom){ }
 
 object ZigZag {
 
@@ -12,11 +15,9 @@ object ZigZag {
     NorthEast, NorthWest, SouthEast, SouthWest = Value
   }
 
-  val Empty = '%'
+  val Empty = '%' //Para efeitos de vizualizacaoo de teste, podera ser alterado na versao final para ' '
 
-  val row = List.fill(5)(Empty)
-  val board = List.fill(5)(row)
-
+  //TODO Arranjar sitios para meter os folds
   //T1
   def randomChar(rand: MyRandom): (Char, MyRandom) = {
     val i = rand.nextInt(26)
@@ -50,17 +51,33 @@ object ZigZag {
   //T4
   def completeBoardRandomly(board: Board, r: MyRandom, f: MyRandom => (Char, MyRandom)): (Board, MyRandom) = board match{
     case Nil => (List(),r)
-    case x::xs => val a = _completeBoardRandomly(x,r,f); val b = completeBoardRandomly(xs,a._2,f); (a._1::b._1, b._2)
+    case x::xs => val a = aux_completeBoardRandomly(x,r,f); val b = completeBoardRandomly(xs,a._2,f); (a._1::b._1, b._2)
   }
 
-  def _completeBoardRandomly(list: List[Char], r: MyRandom, f: MyRandom => (Char, MyRandom)): (List[Char], MyRandom) = list match{
+  def aux_completeBoardRandomly(list: List[Char], r: MyRandom, f: MyRandom => (Char, MyRandom)): (List[Char], MyRandom) = list match{
     case Nil => (Nil,r)
-    case x::xs => if(x==Empty) { val a = f(r); val b = _completeBoardRandomly(xs,a._2,f) ; (a._1::b._1, b._2) }
-                    else { val c = _completeBoardRandomly(xs,r,f); (x::c._1, c._2) }
+    case x::xs => if(x==Empty) { val a = f(r); val b = aux_completeBoardRandomly(xs,a._2,f) ; (a._1::b._1, b._2) }
+                    else { val c = aux_completeBoardRandomly(xs,r,f); (x::c._1, c._2) }
+  }
+
+  //TODO T5
+  def play(coord: Coord2D, dir: Direction): Boolean = { //ou ZigZag???
+    true
+  }
+
+  //Aux
+  def initializeBoard(rowWidth: => Int, columnHeight: => Int)(zigZag: ZigZag): ZigZag = {
+    val eB = List.fill(columnHeight)(List.fill(rowWidth)(Empty))
+    // TODO função para carregar lista de palavras e coord2d do ficheiro
+    // TODO setBoardWithWords() com os dados de cima
+    val r = completeBoardRandomly(eB, zigZag.rand, randomChar)
+    new ZigZag(r._1, r._2)
   }
 
   //Testes
   def main(args: Array[String]): Unit = {
+
+    val board = List.fill(5)(List.fill(5)(Empty))
 
     //Teste T1
     /*val r = MyRandom(9)
