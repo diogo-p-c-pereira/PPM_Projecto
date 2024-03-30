@@ -23,7 +23,6 @@ object ZigZag {
     ((i._1+65).toChar, i._2)
   }
 
-
   //T2
   def fillOneCell(board: Board, letter: Char, coord: Coord2D): Board = { _fillOneCell(board, letter, coord, 0) }
 
