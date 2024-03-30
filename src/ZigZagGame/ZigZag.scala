@@ -3,6 +3,8 @@ package ZigZagGame
 import ZigZagGame.ZigZag.Board
 import ZigZagGame.ZigZag.Direction.Direction
 
+import scala.annotation.tailrec
+
 case class ZigZag(board: Board, rand: MyRandom){ }
 
 object ZigZag {
@@ -38,11 +40,13 @@ object ZigZag {
   }
 
   //T3
+  @tailrec
   def setBoardWithWords(board:Board, words:List[String], positions:List[List[Coord2D]]): Board = words match{
     case x::Nil => aux_setBoardWithWords(board, x.toList, positions.head)
     case x::xs => setBoardWithWords(aux_setBoardWithWords(board, x.toList, positions.head), xs, positions.tail)
   }
 
+  @tailrec
   def aux_setBoardWithWords(board:Board, word: List[Char], position: List[Coord2D]): Board = word match{
     case x::Nil => fillOneCell(board, x, position.head)
     case x::xs => aux_setBoardWithWords(fillOneCell(board, x, position.head), xs, position.tail)
