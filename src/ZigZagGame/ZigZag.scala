@@ -104,6 +104,9 @@ object ZigZag {
     val board3 = completeBoardRandomly(board2, r, randomChar)._1
     IO_Utils.printBoard(board3)
 
+    //Teste T5
+    //TODO
+
   }
 
 }
