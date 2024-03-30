@@ -1,7 +1,5 @@
 package ZigZagGame
 
-import ZigZagGame.ZigZag.Board
-
 import java.io._
 import scala.collection.SortedMap
 import scala.io.StdIn.readLine
