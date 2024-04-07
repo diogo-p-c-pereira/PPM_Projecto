@@ -85,6 +85,10 @@ object ZigZag {
     new ZigZag(r._1, r._2)
   }
 
+  def reset()(zigZag: ZigZag): ZigZag = {
+    new ZigZag(List(List()),zigZag.rand)
+  }
+
   //Testes
   def main(args: Array[String]): Unit = {
 

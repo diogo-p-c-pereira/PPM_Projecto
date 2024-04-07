@@ -12,7 +12,7 @@ object Main extends App {
   val options = SortedMap[Int, CommandLineOption](
     1 -> new CommandLineOption("Iniciar tabuleiro", ZigZag.initializeBoard(5, 5)), //TODO inserir dados pela consola, esta a dar bug
     //2 -> new CommandLineOption("Selecionar palavra", ZigZag.play( ....... )),
-    3 -> new CommandLineOption("Reiniciar", _ => game), //Placeholder TODO Arranjar maneira de passar o MyRandom
+    3 -> new CommandLineOption("Reiniciar", ZigZag.reset()),
     //4 -> new CommandLineOption("Alterar cor do texto", _ =>  ),
     0 -> new CommandLineOption("Exit", _ => sys.exit)
   )
