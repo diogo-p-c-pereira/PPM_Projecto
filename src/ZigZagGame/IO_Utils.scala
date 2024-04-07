@@ -40,10 +40,10 @@ object IO_Utils {
   }*/
 
   def printBoard[A](board: List[List[A]]): Unit = {
-    board.map(x => printRowMap(x))
+    board.map(x => printRow(x))
   }
 
-  def printRowMap[A](list: List[A]): Unit = {
+  def printRow[A](list: List[A]): Unit = {
     list.map(x => print(x + " "))
     println()
   }
