@@ -29,19 +29,19 @@ object ZigZag {
   def fillOneCell(board: Board, letter: Char, coord: Coord2D): Board = { _foldFillOneCell(board, letter, coord)._1 }
 
   def _foldFillOneCell(board: Board, letter: Char, coord: Coord2D): (Board,Int) = {
-    (board foldLeft (List[List[Char]](),0)) ((acc,e) => if(acc._2 == coord._1) (acc._1:+aux_foldFillOneCell(e, letter, coord._2)._1, acc._2+1) else (acc._1:+e , acc._2+1))
+    (board foldLeft (List[List[Char]](),0)) ((acc,e) => if(acc._2 == coord._1) (acc._1:+__foldFillOneCell(e, letter, coord._2)._1, acc._2+1) else (acc._1:+e , acc._2+1))
   }
 
-  def aux_foldFillOneCell(list: List[Char], letter: Char, coord: Int): (List[Char],Int) = {
+  def __foldFillOneCell(list: List[Char], letter: Char, coord: Int): (List[Char],Int) = {
     (list foldLeft (List[Char](),0)) ((acc,e) => if(acc._2 == coord) (acc._1:+letter, acc._2+1) else (acc._1:+e, acc._2+1))
   }
 
   /*def _fillOneCell(board: Board, letter: Char, coord: Coord2D, acc: Int): Board = board match {
     case Nil =>  List()
-    case x::xs => if(acc == coord._1) aux_FillOneCell(x, letter, coord, 0)::xs else x::_fillOneCell(xs, letter, coord, acc+1)
+    case x::xs => if(acc == coord._1) __FillOneCell(x, letter, coord, 0)::xs else x::_fillOneCell(xs, letter, coord, acc+1)
   }
 
-  def aux_FillOneCell(list: List[Char], letter: Char, coord: Coord2D, acc: Int): List[Char] = list match {
+  def __FillOneCell(list: List[Char], letter: Char, coord: Coord2D, acc: Int): List[Char] = list match {
     case Nil => Nil
     case x::xs => if(acc == coord._2) letter::xs else x::aux_FillOneCell(xs, letter, coord, acc+1)
   }*/

@@ -10,7 +10,8 @@ object Main extends App {
   val game = ZigZag(List(List()), rand)
 
   val options = SortedMap[Int, CommandLineOption](
-    1 -> new CommandLineOption("Iniciar tabuleiro", ZigZag.initializeBoard(5, 5)), //TODO inserir dados pela consola, esta a dar bug
+    1 -> new CommandLineOption("Iniciar tabuleiro", ZigZag.initializeBoard(5,5)
+      /*ZigZag.initializeBoard(IO_Utils.getUserInputInt("Nº de linhas").get, IO_Utils.getUserInputInt("Nº de Colunas").get) */), //TODO inserir dados pela consola, esta a dar bug
     //2 -> new CommandLineOption("Selecionar palavra", ZigZag.play( ....... )),
     3 -> new CommandLineOption("Reiniciar", ZigZag.reset()),
     //4 -> new CommandLineOption("Alterar cor do texto", _ =>  ),
