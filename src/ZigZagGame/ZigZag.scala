@@ -22,7 +22,7 @@ object ZigZag {
   //T1
   def randomChar(rand: MyRandom): (Char, MyRandom) = {
     val i = rand.nextInt(26)
-    ((i._1+'A').toChar, i._2)  // 65 - "A" em ASCII
+    ((i._1+'A').toChar, i._2)
   }
 
   //T2
