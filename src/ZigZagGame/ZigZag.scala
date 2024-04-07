@@ -93,10 +93,10 @@ object ZigZag {
   def main(args: Array[String]): Unit = {
 
     val board = List.fill(5)(List.fill(5)(Empty))
+    val r = MyRandom(10)
 
     //Teste T1
-    /*val r = MyRandom(9)
-    val rand = randomChar(r)
+    /*val rand = randomChar(r)
     print(rand)
     val r2 = randomChar(rand._2)
     print(r2)*/
@@ -110,7 +110,6 @@ object ZigZag {
     IO_Utils.printBoard(board2)*/
 
     //Teste T4
-    val r = MyRandom(10)
     val board2 = setBoardWithWords(board, List("DIOGO","AO"), List(List((1,0),(1,1),(1,2),(1,3),(1,4)),List((4,3),(3,4))))
     val board3 = completeBoardRandomly(board2, r, randomChar)._1
     IO_Utils.printBoard(board3)
