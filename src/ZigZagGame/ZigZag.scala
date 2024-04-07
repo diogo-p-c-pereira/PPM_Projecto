@@ -17,19 +17,26 @@ object ZigZag {
     NorthEast, NorthWest, SouthEast, SouthWest = Value
   }
 
-  val Empty = '%' //Para efeitos de vizualizacaoo de teste, podera ser alterado na versao final para ' '
+  val Empty = '%' //Para efeitos de vizualizacao de teste, podera ser alterado na versao final para ' '
 
-  //TODO Arranjar sitios para meter os folds
   //T1
   def randomChar(rand: MyRandom): (Char, MyRandom) = {
     val i = rand.nextInt(26)
-    ((i._1+65).toChar, i._2)
+    ((i._1+'A').toChar, i._2)  // 65 - "A" em ASCII
   }
 
   //T2
-  def fillOneCell(board: Board, letter: Char, coord: Coord2D): Board = { _fillOneCell(board, letter, coord, 0) }
+  def fillOneCell(board: Board, letter: Char, coord: Coord2D): Board = { _foldFillOneCell(board, letter, coord)._1 }
 
-  def _fillOneCell(board: Board, letter: Char, coord: Coord2D, acc: Int): Board = board match {
+  def _foldFillOneCell(board: Board, letter: Char, coord: Coord2D): (Board,Int) = {
+    (board foldLeft (List[List[Char]](),0)) ((acc,e) => if(acc._2 == coord._1) (acc._1:+aux_foldFillOneCell(e, letter, coord._2)._1, acc._2+1) else (acc._1:+e , acc._2+1))
+  }
+
+  def aux_foldFillOneCell(list: List[Char], letter: Char, coord: Int): (List[Char],Int) = {
+    (list foldLeft (List[Char](),0)) ((acc,e) => if(acc._2 == coord) (acc._1:+letter, acc._2+1) else (acc._1:+e, acc._2+1))
+  }
+
+  /*def _fillOneCell(board: Board, letter: Char, coord: Coord2D, acc: Int): Board = board match {
     case Nil =>  List()
     case x::xs => if(acc == coord._1) aux_FillOneCell(x, letter, coord, 0)::xs else x::_fillOneCell(xs, letter, coord, acc+1)
   }
@@ -37,18 +44,18 @@ object ZigZag {
   def aux_FillOneCell(list: List[Char], letter: Char, coord: Coord2D, acc: Int): List[Char] = list match {
     case Nil => Nil
     case x::xs => if(acc == coord._2) letter::xs else x::aux_FillOneCell(xs, letter, coord, acc+1)
-  }
+  }*/
 
   //T3
   @tailrec
   def setBoardWithWords(board:Board, words:List[String], positions:List[List[Coord2D]]): Board = words match{
-    case x::Nil => aux_setBoardWithWords(board, x.toList, positions.head)
+    case Nil => board
     case x::xs => setBoardWithWords(aux_setBoardWithWords(board, x.toList, positions.head), xs, positions.tail)
   }
 
   @tailrec
   def aux_setBoardWithWords(board:Board, word: List[Char], position: List[Coord2D]): Board = word match{
-    case x::Nil => fillOneCell(board, x, position.head)
+    case Nil => board
     case x::xs => aux_setBoardWithWords(fillOneCell(board, x, position.head), xs, position.tail)
   }
 
@@ -65,7 +72,7 @@ object ZigZag {
   }
 
   //TODO T5
-  def play(coord: Coord2D, dir: Direction): Boolean = { //ou ZigZag???
+  def play(word: String, coord: Coord2D, dir: Direction): Boolean = { //ou ZigZag???
     true
   }
 
@@ -91,7 +98,7 @@ object ZigZag {
     print(r2)*/
 
     //Teste T2
-    /*val board2 = fillOneCell(board, randomChar(MyRandom(10))._1 , (9,9))
+    /*val board2 = fillOneCell(board, randomChar(MyRandom(10))._1 , (2,2))
     IO_Utils.printBoard(board2)*/
 
     //Teste T3
@@ -99,7 +106,7 @@ object ZigZag {
     IO_Utils.printBoard(board2)*/
 
     //Teste T4
-    val r = MyRandom(1)
+    val r = MyRandom(10)
     val board2 = setBoardWithWords(board, List("DIOGO","AO"), List(List((1,0),(1,1),(1,2),(1,3),(1,4)),List((4,3),(3,4))))
     val board3 = completeBoardRandomly(board2, r, randomChar)._1
     IO_Utils.printBoard(board3)

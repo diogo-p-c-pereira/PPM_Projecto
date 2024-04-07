@@ -28,32 +28,24 @@ object IO_Utils {
     }
   }
 
-  def printBoard[A](board: List[List[A]]): Unit = board match {
+  /*def printBoard[A](board: List[List[A]]): Unit = board match {
     case Nil => Nil
-    case x::xs => printRow(x); printBoard(xs)
+    //case x::xs => printRow(x); printBoard(xs)
+    case x::xs => printRowMap(x); println(); printBoard(xs)
   }
 
   def printRow[A](list: List[A]): Unit = list match {
     case Nil => println()
     case x::xs => print(x + " "); printRow(xs)
+  }*/
+
+  def printBoard[A](board: List[List[A]]): Unit = {
+    board.map(x => printRowMap(x))
   }
 
-  def copyBytes(filenameIn: String, filenameOut: String) {
-    var in = None: Option[FileInputStream]
-    var out = None: Option[FileOutputStream]
-    try {
-      in = Some(new FileInputStream(filenameIn))
-      out = Some(new FileOutputStream(filenameOut))
-      var c = 0
-      while ({c=in.get.read; c != -1}) {
-        out.get.write(c)
-      }
-    } catch {
-      case e: IOException => e.printStackTrace
-    } finally {
-      if (in.isDefined) in.get.close
-      if (out.isDefined) out.get.close
-    }
+  def printRowMap[A](list: List[A]): Unit = {
+    list.map(x => print(x + " "))
+    println()
   }
 
 }
