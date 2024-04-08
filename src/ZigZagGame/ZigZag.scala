@@ -76,8 +76,6 @@ object ZigZag {
     true
   }
 
-
-
   //T8 Aux
   def initializeBoard(rowWidth: => Int, columnHeight: => Int, fileName: String)(zigZag: ZigZag): ZigZag = {
     val words = IO_Utils.loadWordsCoord(fileName)
@@ -131,7 +129,6 @@ object ZigZag {
 
     //Teste T5
     //TODO
-
 
   }
 
