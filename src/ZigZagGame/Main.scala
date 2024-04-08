@@ -14,7 +14,7 @@ object Main extends App {
 
   val options = SortedMap[Int, CommandLineOption](
     1 -> new CommandLineOption("Iniciar tabuleiro",
-      ZigZag.initializeBoard(IO_Utils.getUserInputInt("Nº de linhas").get, IO_Utils.getUserInputInt("Nº de Colunas").get,WordsFile)),
+      ZigZag.initializeBoard(IO_Utils.getUserInputInt("Nº de linhas").get, IO_Utils.getUserInputInt("Nº de Colunas").get, WordsFile)),
     //2 -> new CommandLineOption("Selecionar palavra", ZigZag.play( ....... )),
     3 -> new CommandLineOption("Reiniciar", ZigZag.reset()),
     4 -> new CommandLineOption("Alterar cor do texto", ZigZag.changeColor(IO_Utils.prompt("Cor"))),

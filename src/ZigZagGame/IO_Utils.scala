@@ -65,21 +65,21 @@ object IO_Utils {
 
   def loadWordsCoord(file: String): (List[String],List[List[(Int,Int)]]) = {
     val bufferedSource = Source.fromFile(file)
-    var a = List[String]()
-    var b = List[List[(Int,Int)]]()
+    var words = List[String]()
+    var coords = List[List[(Int,Int)]]()
     for (line <- bufferedSource.getLines){
-      val d = line.toUpperCase.mkString.split(";")
-      val p = d(1).split(" ")
-      var s = List[(Int,Int)]()
-      for(m <- p){
-        val z = m.split(",")
-        s = s:+(z(0).toInt,z(1).toInt)
+      val a = line.toUpperCase.mkString.split(";")
+      val b = a(1).split(" ")
+      var c = List[(Int,Int)]()
+      for (t <- b){
+        val e = t.split(",")
+        c = c:+(e(0).toInt, e(1).toInt)
       }
-      a= a:+d(0)
-      b= b:+s
+      words= words:+a(0)
+      coords= coords:+c
     }
     bufferedSource.close
-    (a,b)
+    (words,coords)
   }
 
   def changeTextColor(color: String) = color match {
