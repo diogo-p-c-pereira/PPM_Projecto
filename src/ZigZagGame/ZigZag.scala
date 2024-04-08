@@ -98,7 +98,7 @@ object ZigZag {
   }
 
   def changeColor(color: => String)(zigZag: ZigZag): ZigZag = {
-    //IO_Utils.changeTextColor(color)
+    IO_Utils.changeTextColor(color)
     zigZag
   }
 

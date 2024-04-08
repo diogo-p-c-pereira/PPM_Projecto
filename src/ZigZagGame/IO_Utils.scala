@@ -5,6 +5,7 @@ import scala.collection.SortedMap
 import scala.io.Source
 import scala.io.StdIn.readLine
 import scala.util.{Failure, Success, Try}
+import scala.Console
 
 object IO_Utils {
 
@@ -81,15 +82,15 @@ object IO_Utils {
     (a,b)
   }
 
-  /*def changeTextColor(color: String) = color match {
+  def changeTextColor(color: String) = color match {
     case "PRETO" => print(Console.BLACK)
     case "AZUL" => print(Console.BLUE)
     case "VERDE" => print(Console.GREEN)
     case "VERMELHO" => print(Console.RED)
-    case "BRANCO" => print(Console.WHITE)
+    case "BRANCO" => print(Console.RESET)
     case "AMARELO" => print(Console.YELLOW)
     case _ => println("Cor Invalida")
-  }*/
+  }
 
   //Testes
   def main(args: Array[String]): Unit = {
