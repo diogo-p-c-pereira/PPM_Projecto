@@ -76,17 +76,32 @@ object ZigZag {
     true
   }
 
-  //Aux
-  def initializeBoard(rowWidth: => Int, columnHeight: => Int)(zigZag: ZigZag): ZigZag = {
-    val eB = List.fill(columnHeight)(List.fill(rowWidth)(Empty))
-    // TODO função para carregar lista de palavras e coord2d do ficheiro
-    // TODO setBoardWithWords() com os dados de cima
-    val r = completeBoardRandomly(eB, zigZag.rand, randomChar)
+
+
+  //T8 Aux
+  def initializeBoard(rowWidth: => Int, columnHeight: => Int, fileName: String)(zigZag: ZigZag): ZigZag = {
+    val words = IO_Utils.loadWordsCoord(fileName)
+    val b = setBoardWithWords(createBoard(rowWidth, columnHeight),words._1,words._2)
+    val r = completeBoardRandomly(b, zigZag.rand, randomChar)
     new ZigZag(r._1, r._2)
+  }
+
+  def createBoard(rowWidth: Int, columnHeight: Int): Board = {
+      List.fill(columnHeight)(List.fill(rowWidth)(Empty))
   }
 
   def reset()(zigZag: ZigZag): ZigZag = {
     new ZigZag(List(List()),zigZag.rand)
+  }
+
+  def exit(file: String)(zigZag: ZigZag): ZigZag = {
+    IO_Utils.writeSeed(file, (zigZag.rand).seed)
+    sys.exit()
+  }
+
+  def changeColor(color: => String)(zigZag: ZigZag): ZigZag = {
+    //IO_Utils.changeTextColor(color)
+    zigZag
   }
 
   //Testes
@@ -112,10 +127,11 @@ object ZigZag {
     //Teste T4
     val board2 = setBoardWithWords(board, List("DIOGO","AO"), List(List((1,0),(1,1),(1,2),(1,3),(1,4)),List((4,3),(3,4))))
     val board3 = completeBoardRandomly(board2, r, randomChar)._1
-    IO_Utils.printBoard(board3)
+    IO_Utils.printBoard(board2)
 
     //Teste T5
     //TODO
+
 
   }
 

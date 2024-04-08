@@ -5,26 +5,21 @@ import scala.collection.SortedMap
 
 object Main extends App {
 
-  //TODO Carregar de um ficheiro binário o MyRandom e gravar no final de cada execução
-  val rand = MyRandom(10)
+  val SeedFile = "seed.txt"
+  val WordsFile = "words.txt"
+
+  val seed = IO_Utils.loadSeed(SeedFile)
+  val rand = MyRandom(seed)
   val game = ZigZag(List(List()), rand)
 
   val options = SortedMap[Int, CommandLineOption](
-    1 -> new CommandLineOption("Iniciar tabuleiro", ZigZag.initializeBoard(5,5)
-      /*ZigZag.initializeBoard(IO_Utils.getUserInputInt("Nº de linhas").get, IO_Utils.getUserInputInt("Nº de Colunas").get) */), //TODO inserir dados pela consola, esta a dar bug
+    1 -> new CommandLineOption("Iniciar tabuleiro",
+      ZigZag.initializeBoard(IO_Utils.getUserInputInt("Nº de linhas").get, IO_Utils.getUserInputInt("Nº de Colunas").get,WordsFile)),
     //2 -> new CommandLineOption("Selecionar palavra", ZigZag.play( ....... )),
     3 -> new CommandLineOption("Reiniciar", ZigZag.reset()),
-    //4 -> new CommandLineOption("Alterar cor do texto", _ =>  ),
-    0 -> new CommandLineOption("Exit", _ => sys.exit)
+    4 -> new CommandLineOption("Alterar cor do texto", ZigZag.changeColor(IO_Utils.prompt("Cor"))),
+    0 -> new CommandLineOption("Exit", ZigZag.exit(SeedFile))
   )
-
-  /*val colorOptions = SortedMap[Int, CommandLineOption](
-    1 -> new CommandLineOption("Vermelho", _ => print(Console.RED)),
-    2 -> new CommandLineOption("Verde", _ => print(Console.GREEN)),
-    3 -> new CommandLineOption("Amarelo", _ => print(Console.YELLOW)),
-    4 -> new CommandLineOption("Azul", _ => print(Console.BLUE)),
-    0 -> new CommandLineOption("Voltar", _ => mainLoop(game))
-  )*/
 
   mainLoop(game)
 
