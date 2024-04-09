@@ -5,16 +5,28 @@ import ZigZagGame.ZigZag.Direction.Direction
 
 import scala.annotation.tailrec
 
-case class ZigZag(board: Board, rand: MyRandom){ }
+case class ZigZag(board: Board, rand: MyRandom){ } //TODO List(String, Boolean) como atributo
 
 object ZigZag {
 
   type Board = List[List[Char]]
   type Coord2D = (Int, Int) //(row, column)
-  object Direction extends Enumeration {
+  object Direction extends Enumeration {     //TODO Funcao para retornar vetor correspondente ou nova Coord2D
     type Direction = Value
     val North, South, East, West,
     NorthEast, NorthWest, SouthEast, SouthWest = Value
+
+    def processCoord(coord: Coord2D, dir: Direction): Coord2D = dir match {
+      case North => (coord._1-1,coord._2)
+      case South => (coord._1+1,coord._2)
+      case East => (coord._1,coord._2+1)
+      case West => (coord._1,coord._2-1)
+      case NorthEast => (coord._1-1, coord._2+1)
+      case NorthWest => (coord._1-1, coord._2-1)
+      case SouthEast => (coord._1+1, coord._2+1)
+      case SouthWest => (coord._1+1, coord._2-1)
+      case _ => coord
+    }
   }
 
   val Empty = '%' //Para efeitos de vizualizacao de teste, podera ser alterado na versao final para ' '
@@ -28,6 +40,7 @@ object ZigZag {
   //T2
   def fillOneCell(board: Board, letter: Char, coord: Coord2D): Board = { _foldFillOneCell(board, letter, coord)._1 }
 
+  //using Fold
   def _foldFillOneCell(board: Board, letter: Char, coord: Coord2D): (Board,Int) = {
     (board foldLeft (List[List[Char]](),0)) ((acc,e) => if(acc._2 == coord._1) (acc._1:+__foldFillOneCell(e, letter, coord._2)._1, acc._2+1) else (acc._1:+e , acc._2+1))
   }
@@ -36,15 +49,16 @@ object ZigZag {
     (list foldLeft (List[Char](),0)) ((acc,e) => if(acc._2 == coord) (acc._1:+letter, acc._2+1) else (acc._1:+e, acc._2+1))
   }
 
-  /*def _fillOneCell(board: Board, letter: Char, coord: Coord2D, acc: Int): Board = board match {
+  //using PatternMatching
+  def _fillOneCell(board: Board, letter: Char, coord: Coord2D, acc: Int): Board = board match {
     case Nil =>  List()
     case x::xs => if(acc == coord._1) __FillOneCell(x, letter, coord, 0)::xs else x::_fillOneCell(xs, letter, coord, acc+1)
   }
 
   def __FillOneCell(list: List[Char], letter: Char, coord: Coord2D, acc: Int): List[Char] = list match {
     case Nil => Nil
-    case x::xs => if(acc == coord._2) letter::xs else x::aux_FillOneCell(xs, letter, coord, acc+1)
-  }*/
+    case x::xs => if(acc == coord._2) letter::xs else x::__FillOneCell(xs, letter, coord, acc+1)
+  }
 
   //T3
   @tailrec
@@ -71,8 +85,8 @@ object ZigZag {
                     else { val c = aux_completeBoardRandomly(xs,r,f); (x::c._1, c._2) }
   }
 
-  //TODO T5
-  def play(word: String, coord: Coord2D, dir: Direction): Boolean = { //ou ZigZag???
+  //TODO T5 Verificar em todos direções
+  def play(word: String, coord: Coord2D, dir: Direction): Boolean = {
     true
   }
 
@@ -109,23 +123,27 @@ object ZigZag {
     val r = MyRandom(10)
 
     //Teste T1
-    /*val rand = randomChar(r)
-    print(rand)
-    val r2 = randomChar(rand._2)
-    print(r2)*/
+    println("T1:")
+    println(r)
+    val rC = randomChar(r)
+    println(rC)
+    val rC2 = randomChar(rC._2)
+    println(rC2)
 
     //Teste T2
-    /*val board2 = fillOneCell(board, randomChar(MyRandom(10))._1 , (2,2))
-    IO_Utils.printBoard(board2)*/
+    println("\nT2:")
+    val board2 = fillOneCell(board, randomChar(MyRandom(10))._1 , (2,2))
+    IO_Utils.printBoard(board2)
 
     //Teste T3
-    /*val board2 = setBoardWithWords(board, List("DIOGO","AO"), List(List((1,0),(1,1),(1,2),(1,3),(1,4)),List((4,3),(3,4))))
-    IO_Utils.printBoard(board2)*/
+    println("\nT3:")
+    val board3 = setBoardWithWords(board, List("DIOGO","AI"), List(List((1,0),(1,1),(1,2),(1,3),(1,4)),List((4,3),(3,4))))
+    IO_Utils.printBoard(board3)
 
     //Teste T4
-    val board2 = setBoardWithWords(board, List("DIOGO","AO"), List(List((1,0),(1,1),(1,2),(1,3),(1,4)),List((4,3),(3,4))))
-    val board3 = completeBoardRandomly(board2, r, randomChar)._1
-    IO_Utils.printBoard(board2)
+    println("\nT4:")
+    val board4 = completeBoardRandomly(board3, r, randomChar)._1
+    IO_Utils.printBoard(board4)
 
     //Teste T5
     //TODO
