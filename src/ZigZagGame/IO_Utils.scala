@@ -1,5 +1,8 @@
 package ZigZagGame
 
+import ZigZagGame.ZigZag.Direction
+import ZigZagGame.ZigZag.Direction.Direction
+
 import java.io._
 import scala.collection.SortedMap
 import scala.io.Source
@@ -82,6 +85,14 @@ object IO_Utils {
     (words,coords)
   }
 
+  def printResult(boolean: Boolean): Unit = {
+    if(boolean){
+      println("Acertou!")
+    }else{
+      println("Errou!")
+    }
+  }
+
   def changeTextColor(color: String) = color match {
     case "PRETO" => print(Console.BLACK)
     case "AZUL" => print(Console.BLUE)
@@ -91,6 +102,14 @@ object IO_Utils {
     case "AMARELO" => print(Console.YELLOW)
     case _ => println("Cor Invalida")
   }
+
+  /*def directionOptions(): Direction = {
+    println("1-North \n 2-South \n 3-East \n 4-West \n 5-NorthEast \n 6-NorthWest \n7-SouthEast \n8-SouthWest")
+    val opt = getUserInputInt("Selecione Direção:").get
+    match opt {
+
+    }
+  }*/
 
   //Testes
   def main(args: Array[String]): Unit = {
