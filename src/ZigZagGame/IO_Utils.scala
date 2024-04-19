@@ -1,8 +1,5 @@
 package ZigZagGame
 
-import ZigZagGame.ZigZag.Direction
-import ZigZagGame.ZigZag.Direction.Direction
-
 import java.io._
 import scala.collection.SortedMap
 import scala.io.Source
