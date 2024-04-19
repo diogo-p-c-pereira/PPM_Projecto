@@ -1,7 +1,5 @@
 package ZigZagGame
 
-import ZigZagGame.ZigZag.Direction
-
 import scala.annotation.tailrec
 import scala.collection.SortedMap
 

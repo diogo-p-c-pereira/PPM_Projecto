@@ -49,8 +49,6 @@ object IO_Utils {
     board.map(x => printRow(x))
   }
 
-
-
   def loadSeed(file: String) = {
     val bufferedSource = Source.fromFile(file)
     val a = bufferedSource.getLines.mkString
