@@ -72,6 +72,7 @@ object ZigZag {
   //T3
   @tailrec
   def setBoardWithWords(board: Board, words: List[String], positions: List[List[Coord2D]]): Board = {
+    @tailrec
     def aux_setBoardWithWords(board: Board, word: List[Char], position: List[Coord2D]): Board = word match {
       case Nil => board
       case x :: xs => aux_setBoardWithWords(fillOneCell(board, x, position.head), xs, position.tail)
@@ -88,7 +89,7 @@ object ZigZag {
     def aux_completeBoardRandomly(list: List[Char], r: MyRandom, f: MyRandom => (Char, MyRandom)): (List[Char], MyRandom) = list match {
       case Nil => (Nil, r)
       case x :: xs => if (x == Empty) {
-        val a = f(r);
+        val a = f(r)
         val b = aux_completeBoardRandomly(xs, a._2, f); (a._1 :: b._1, b._2)
       }
       else {
@@ -97,7 +98,7 @@ object ZigZag {
     }
     board match {
       case Nil => (List(), r)
-      case x :: xs => val a = aux_completeBoardRandomly(x, r, f);
+      case x :: xs => val a = aux_completeBoardRandomly(x, r, f)
         val b = completeBoardRandomly(xs, a._2, f); (a._1 :: b._1, b._2)
     }
   }
@@ -111,7 +112,7 @@ object ZigZag {
     def aux_play(board: Board, word: List[Char], coords: List[Coord2D], dir: Direction): Boolean = word match {
       case Nil => true
       case x :: xs => if (x == getChar(board, coords.last)) {
-        val a = Direction.processCoord(coords.last, dir);
+        val a = Direction.processCoord(coords.last, dir)
         if (verifyCoord(a, coords)) _play(board, xs, coords :+ a, Direction.getAllDirs()) else false }
       else false
     }
@@ -121,26 +122,27 @@ object ZigZag {
     }
   }
 
-
-
+  @tailrec
   def verifyCoord(coord2D: Coord2D, coords: List[Coord2D]): Boolean = coords match { //Verifica que não existe a coord2D na Lista
     case Nil => true
     case x :: xs => if (coord2D == x) false else verifyCoord(coord2D, xs)
   }
 
-  def getChar(board: Board, coord: Coord2D): Char = { _getChar(board, coord,0) }
-
-  def _getChar(board: Board, coord: Coord2D, acc: Int): Char = {
-    def aux_getChar(list: List[Char], coord: Coord2D, acc: Int): Char = list match {
-      case Nil => Empty
-      case x::xs => if(acc == coord._2) x else aux_getChar(xs, coord, acc+1)
+  def getChar(board: Board, coord: Coord2D): Char = {
+    @tailrec
+    def _getChar(board: Board, coord: Coord2D, acc: Int): Char = {
+      @tailrec
+      def aux_getChar(list: List[Char], coord: Coord2D, acc: Int): Char = list match {
+        case Nil => Empty
+        case x::xs => if(acc == coord._2) x else aux_getChar(xs, coord, acc+1)
+      }
+      board match {
+        case Nil => Empty
+        case x::xs => if(acc == coord._1) aux_getChar(x, coord, 0) else _getChar(xs, coord, acc+1)
+      }
     }
-    board match {
-      case Nil => Empty
-      case x::xs => if(acc == coord._1) aux_getChar(x, coord, 0) else _getChar(xs, coord, acc+1)
-    }
+    _getChar(board, coord,0)
   }
-
 
   //T8 Aux
   def initializeBoard(rowWidth: => Int, columnHeight: => Int, fileName: String)(zigZag: ZigZag): ZigZag = {
@@ -186,7 +188,7 @@ object ZigZag {
   }
 
   def exit(file: String)(zigZag: ZigZag): ZigZag = {
-    IO_Utils.writeSeed(file, (zigZag.rand).seed)
+    IO_Utils.writeSeed(file, zigZag.rand.seed)
     sys.exit()
   }
 
