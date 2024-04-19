@@ -45,13 +45,14 @@ object IO_Utils {
   }*/
 
   def printBoard[A](board: List[List[A]]): Unit = {
+    def printRow[A](list: List[A]): Unit = {
+      list.map(x => print(x + " "))
+      println()
+    }
     board.map(x => printRow(x))
   }
 
-  def printRow[A](list: List[A]): Unit = {
-    list.map(x => print(x + " "))
-    println()
-  }
+
 
   def loadSeed(file: String) = {
     val bufferedSource = Source.fromFile(file)
