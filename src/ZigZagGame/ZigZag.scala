@@ -227,7 +227,7 @@ object ZigZag {
     IO_Utils.printBoard(board4)
 
     //Teste T5
-    println()
+    println("\nT5:")
     val board5 = setBoardWithWords(board, List("DIOG","AI"), List(List((1,0),(1,1),(1,2),(2,2)),List((4,3),(3,4))))
     val board6 = completeBoardRandomly(board5, r, randomChar)._1
     IO_Utils.printBoard(board6)
