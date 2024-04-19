@@ -200,7 +200,7 @@ object ZigZag {
   //Testes
   def main(args: Array[String]): Unit = {
 
-    val board = List.fill(5)(List.fill(5)(Empty))
+    val board = createBoard(5,5)
     val r = MyRandom(43326622)
 
     //Teste T1
